@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('sadam'),
             'level' => 'admin'
         ]);
+
+        User::create([
+            'name' => 'sadam ps',
+            'email' => 'sadam@gmail.com',
+            'password' => bcrypt('123'),
+            'level' => 'user'
+        ]);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

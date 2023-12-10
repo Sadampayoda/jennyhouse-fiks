@@ -40,11 +40,14 @@
         <div class="icons-home mt-2 ms-5">
            
             @if (auth()->user())
+                @if (auth()->user()->level != 'admin')
                 
-                <a href="#"><i class='bx bx-cart'></i></a>
-                <a href="#"><i class='bx bx-heart ms-3'></i></a>
+                    <a href="{{route('order')}}"><i class='bx bx-cart'></i></a>
+                    <a href="{{route('admin.index')}}"><i class='bx bx-user-circle ms-3'> {{auth()->user()->name}}</i></a>
+                @else
+                    <a href="{{route('profile.index')}}"><i class='bx bx-user-circle ms-3'> {{auth()->user()->name}}</i></a>
+                @endif
                
-                <a href="{{route('profile.index')}}"><i class='bx bx-user-circle ms-3'> {{auth()->user()->name}}</i></a>
                 <a href="{{route('logout')}}"><i class="bi bi-box-arrow-right ms-4"></i></a>
                 {{-- <form action="{{route('logout')}}" method="POST">
                     @csrf
@@ -88,6 +91,7 @@
                     </li>
                     @if (auth()->user())
                         @if (auth()->user()->level == 'admin')
+                            
                             {{-- <a class="btn btn-outline-danger" href="{{route('logout')}}">Tambah Product</i></a> --}}
                             <li class="nav-item dropdown">
                                 <a class="nav-link {{ ($active === "admin") ? 'active' : '' }} dropdown-toggle" href="{{route('product')}}" id="navbarDropdownMenuLink" role="button"
@@ -101,12 +105,14 @@
                                     {{-- <li><a class="dropdown-item" href="{{route('option.product',['id' => 'hair-color'])}}">Hair Color</a></li> --}}
                                 </ul>
                             </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('transaksi.index')}}">Store</a>
+                            </li>
                         @endif 
                     @endif
                     
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Store</a>
-                    </li>
+                    
                 </ul>
             </div>
         </div>

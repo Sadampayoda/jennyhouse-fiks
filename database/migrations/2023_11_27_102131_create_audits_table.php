@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('harga_barang', 10, 2);
             $table->integer('quantity');
             $table->unsignedBigInteger('user_id');
-            
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

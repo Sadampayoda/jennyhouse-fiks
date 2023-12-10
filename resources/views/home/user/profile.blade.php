@@ -20,6 +20,7 @@
 
 
         <button type="submit" class="btn btn-primary">Update Profile</button>
+        
     </form>
 </div>
 @endsection

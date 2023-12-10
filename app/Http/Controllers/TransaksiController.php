@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transaksi;
 use App\Models\Audit;
+use App\Models\Order;
+use App\Models\OrderBarang;
 
 class TransaksiController extends Controller
 {
@@ -37,21 +39,23 @@ class TransaksiController extends Controller
         $transaksiInput= $request->validate([
             'product' => 'required',
             'quantity' => 'required|numeric|min:1',
-            'address' => 'required|min:5',
         ]);
-        Transaksi::create([
+        
+        Order::create([
             'user_id' => auth()->user()->id,
-            'product' => $request->input('product'),
-            'quantity' => $request->input('quantity'),
-            'address' => $request->input('address'),
+            // 'address' => $request->input('address'),
         ]);
-        Audit::create([
-            'status' => 'beli barang',
-            'nama_barang' => $request->input('name'),
-            'harga_barang' => $request->input('harga'),
-            'quantity' => $request->input('quantity'),
-            'user_id' => auth()->user()->id,
+        OrderBarang::create([
+            'barang_id' => $request->input('product'),
+            'quantity' => $request->input('quantity')
         ]);
+        // Audit::create([
+        //     'status' => 'beli barang',
+        //     'nama_barang' => $request->input('name'),
+        //     'harga_barang' => $request->input('harga'),
+        //     'quantity' => $request->input('quantity'),
+        //     'user_id' => auth()->user()->id,
+        // ]);
 
         // Berikan respons atau lakukan tindakan lain...
         return redirect()->route('home')->with('success', 'Transaksi berhasil disimpan!');
@@ -87,5 +91,10 @@ class TransaksiController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function pay()
+    {
+        // return 'i';
     }
 }

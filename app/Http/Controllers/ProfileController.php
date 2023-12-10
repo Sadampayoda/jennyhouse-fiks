@@ -16,7 +16,13 @@ class ProfileController extends Controller
     {
         
         $user = Auth::user();
-        $transactions = DB::table('transaksis')->where('user_id',auth()->user()->id)->get();
+        $transactions = DB::table('detal_transaksis')->join('orders','orders.id','=','detal_transaksis.order_id')
+                                                    ->join('order_barangs','orders.id','=','order_barangs.id')
+                                                    ->join('barangs','barangs.id','=','order_barangs.barang_id')
+                                                    ->join('users','users.id','=','orders.user_id')
+                                                    ->join('kartu_kredits','kartu_kredits.user_id','=','users.id')
+                                                    ->where('orders.user_id',auth()->user()->id)
+                                                    ->get();
 
         return view('home.user.show',[
             'active' => 'profile',
